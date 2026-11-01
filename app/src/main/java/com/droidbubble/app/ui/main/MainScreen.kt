@@ -336,7 +336,7 @@ fun MainScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Feedback,
-                        contentDescription = "Send Feedback",
+                        contentDescription = "Enviar Feedback",
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(26.dp)
                     )
@@ -352,13 +352,13 @@ fun MainScreen(
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // SECTION 1: PERMISSIONS (Hides individual item once granted, hides whole section when all granted!)
+            // SEÇÃO 1: PERMISSÕES
             if (pendingPermissions.isNotEmpty()) {
                 item {
                     SectionHeader(
-                        title = "Required Setup",
+                        title = "Configuração Necessária",
                         icon = Icons.Default.Security,
-                        badge = "${pendingPermissions.size} Pending",
+                        badge = "${pendingPermissions.size} Pendente(s)",
                         badgeColor = MaterialTheme.colorScheme.error
                     )
                 }
@@ -408,7 +408,7 @@ fun MainScreen(
                                             },
                                             shape = RoundedCornerShape(12.dp)
                                         ) {
-                                            Text("Grant", fontWeight = FontWeight.SemiBold)
+                                            Text("Conceder", fontWeight = FontWeight.SemiBold)
                                         }
                                     }
                                 )
@@ -418,12 +418,12 @@ fun MainScreen(
                 }
             }
 
-            // SECTION 2: MASTER ENABLE SWITCH
+            // SEÇÃO 2: INTERRUPTOR PRINCIPAL
             item {
                 SettingsCardItem(position = GroupPosition.SINGLE, isActive = settings.isEnabled) {
                     ListItem(
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                        headlineContent = { Text("Enable Island", fontWeight = FontWeight.SemiBold) },
+                        headlineContent = { Text("Ativar Ilha", fontWeight = FontWeight.SemiBold) },
                         leadingContent = {
                             Icon(Icons.Default.PowerSettingsNew, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                         },
@@ -439,7 +439,7 @@ fun MainScreen(
                 }
             }
 
-            // UPDATE BUTTON: Shaped like a list component in bright accent color
+            // BOTÃO DE ATUALIZAÇÃO
             item {
                 val isDownloading = updateState is MainScreenViewModel.UpdateState.Downloading
                 val isChecking = updateState is MainScreenViewModel.UpdateState.Checking
@@ -471,18 +471,18 @@ fun MainScreen(
                         headlineContent = {
                             Text(
                                 text = when (updateState) {
-                                    is MainScreenViewModel.UpdateState.Checking -> "Checking for updates..."
-                                    is MainScreenViewModel.UpdateState.UpToDate -> "Up to date"
+                                    is MainScreenViewModel.UpdateState.Checking -> "Verificando atualizações..."
+                                    is MainScreenViewModel.UpdateState.UpToDate -> "Aplicativo atualizado"
                                     is MainScreenViewModel.UpdateState.Available -> {
                                         val rel = (updateState as MainScreenViewModel.UpdateState.Available).release
-                                        "Update available (${rel.version})"
+                                        "Atualização disponível (${rel.version})"
                                     }
                                     is MainScreenViewModel.UpdateState.Downloading -> {
                                         val p = ((updateState as MainScreenViewModel.UpdateState.Downloading).progress * 100).roundToInt()
-                                        "Downloading update ($p%)..."
+                                        "Baixando atualização ($p%)..."
                                     }
-                                    is MainScreenViewModel.UpdateState.Error -> "Check for Updates"
-                                    else -> "Check for Updates"
+                                    is MainScreenViewModel.UpdateState.Error -> "Verificar Atualizações"
+                                    else -> "Verificar Atualizações"
                                 },
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 16.sp
@@ -500,21 +500,21 @@ fun MainScreen(
                                 is MainScreenViewModel.UpdateState.UpToDate -> {
                                     Icon(
                                         imageVector = Icons.Default.CheckCircle,
-                                        contentDescription = "Up to date",
+                                        contentDescription = "Atualizado",
                                         modifier = Modifier.size(24.dp)
                                     )
                                 }
                                 is MainScreenViewModel.UpdateState.Available -> {
                                     Icon(
                                         imageVector = Icons.Default.SystemUpdate,
-                                        contentDescription = "Update Available",
+                                        contentDescription = "Atualização Disponível",
                                         modifier = Modifier.size(24.dp)
                                     )
                                 }
                                 else -> {
                                     Icon(
                                         imageVector = Icons.Default.Refresh,
-                                        contentDescription = "Check for Updates",
+                                        contentDescription = "Verificar Atualizações",
                                         modifier = Modifier.size(24.dp)
                                     )
                                 }
@@ -543,7 +543,7 @@ fun MainScreen(
                 }
             }
 
-            // TABS: ISLAND DIMENSIONS & APPEARANCE
+            // NAVEGAÇÃO DE MENUS
             item {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
@@ -553,14 +553,14 @@ fun MainScreen(
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                             modifier = Modifier.clickable { showDimensionsPage = true },
-                            headlineContent = { Text("Island Dimensions", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Dimensões da Ilha", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.Straighten, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                             },
                             trailingContent = {
                                 Icon(
                                     Icons.AutoMirrored.Filled.ArrowForwardIos,
-                                    contentDescription = "Open Island Dimensions",
+                                    contentDescription = "Abrir Dimensões da Ilha",
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                                     modifier = Modifier.size(16.dp)
                                 )
@@ -572,14 +572,14 @@ fun MainScreen(
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                             modifier = Modifier.clickable { showAppearancePage = true },
-                            headlineContent = { Text("Appearance & Feedback", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Aparência e Feedback", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.Palette, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                             },
                             trailingContent = {
                                 Icon(
                                     Icons.AutoMirrored.Filled.ArrowForwardIos,
-                                    contentDescription = "Open Appearance & Feedback",
+                                    contentDescription = "Abrir Aparência e Feedback",
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                                     modifier = Modifier.size(16.dp)
                                 )
@@ -591,14 +591,13 @@ fun MainScreen(
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                             modifier = Modifier.clickable { showGeneralPage = true },
-                            headlineContent = { Text("General", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Geral", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.Tune, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                             },
                             trailingContent = {
                                 Icon(
                                     Icons.AutoMirrored.Filled.ArrowForwardIos,
-                                    contentDescription = "Open General",
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                                     modifier = Modifier.size(16.dp)
                                 )
@@ -608,10 +607,10 @@ fun MainScreen(
                 }
             }
 
-            // SECTION 5A: ISLAND ACTIVITIES (DRAG TO REORDER PRIORITY)
+            // SEÇÃO 5A: ATIVIDADES DA ILHA
             item {
                 SectionHeader(
-                    title = "Island Activities",
+                    title = "Atividades da Ilha",
                     icon = Icons.Default.Apps
                 )
             }
@@ -678,16 +677,16 @@ fun MainScreen(
                             }
 
                             val featureTitle = when (currentKey) {
-                                "CALL" -> "Phone Calls"
-                                "MEDIA" -> "Media Player"
-                                "NOTIFICATION" -> "Incoming Notifications"
-                                "PROGRESS" -> "Live Progress & Activities"
-                                "RECORDING" -> "Screen Recording Indicator"
-                                "FLASHLIGHT" -> "Flashlight Indicator"
-                                "FPS" -> "FPS Counter"
-                                "WEATHER" -> "Weather & Temperature"
-                                "NETWORK_SPEED" -> "Wi-Fi & Network Speed"
-                                "PERSISTENT_CHARGING" -> "Persistent Charging"
+                                "CALL" -> "Chamadas Telefônicas"
+                                "MEDIA" -> "Reprodutor de Mídia"
+                                "NOTIFICATION" -> "Notificações Recebidas"
+                                "PROGRESS" -> "Progresso e Atividades ao Vivo"
+                                "RECORDING" -> "Indicador de Gravação de Tela"
+                                "FLASHLIGHT" -> "Indicador de Lanterna"
+                                "FPS" -> "Contador de FPS"
+                                "WEATHER" -> "Clima e Temperatura"
+                                "NETWORK_SPEED" -> "Velocidade do Wi-Fi e Rede"
+                                "PERSISTENT_CHARGING" -> "Carregamento Persistente"
                                 else -> currentKey
                             }
 
@@ -787,7 +786,7 @@ fun MainScreen(
                                             ) {
                                                 Icon(
                                                     imageVector = Icons.Default.Menu,
-                                                    contentDescription = "Drag to reorder",
+                                                    contentDescription = "Arrastar para reordenar",
                                                     tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.55f),
                                                     modifier = Modifier.size(20.dp)
                                                 )
@@ -828,10 +827,10 @@ fun MainScreen(
                 }
             }
 
-            // SECTION 5B: SYSTEM ALERTS & INDICATORS (ALWAYS TOP PRIORITY)
+            // SEÇÃO 5B: ALERTAS DO SISTEMA
             item {
                 SectionHeader(
-                    title = "System Alerts",
+                    title = "Alertas do Sistema",
                     icon = Icons.Default.NotificationsActive
                 )
             }
@@ -844,7 +843,7 @@ fun MainScreen(
                     SettingsCardItem(position = GroupPosition.TOP, isActive = settings.showBluetooth) {
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            headlineContent = { Text("Bluetooth Connecting", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Conexão Bluetooth", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.Bluetooth, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             },
@@ -862,7 +861,7 @@ fun MainScreen(
                     SettingsCardItem(position = GroupPosition.MIDDLE, isActive = settings.showCharging) {
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            headlineContent = { Text("Charging Indicator", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Indicador de Carregamento", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.Bolt, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             },
@@ -880,7 +879,7 @@ fun MainScreen(
                     SettingsCardItem(position = GroupPosition.MIDDLE, isActive = settings.showRingerMode) {
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            headlineContent = { Text("Ring Modes", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Modos do Toque", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.NotificationsActive, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             },
@@ -898,7 +897,7 @@ fun MainScreen(
                     SettingsCardItem(position = GroupPosition.BOTTOM, isActive = settings.showAirplaneMode) {
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            headlineContent = { Text("Airplane Mode", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Modo Avião", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.AirplanemodeActive, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             },
@@ -924,7 +923,7 @@ fun MainScreen(
     }
 }
 
-    // App Filter Modal Bottom Sheet
+    // Modal de Filtro por Aplicativo
     if (showAppFilterSheet) {
         val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
         val coroutineScope = rememberCoroutineScope()
@@ -939,7 +938,7 @@ fun MainScreen(
                     .padding(horizontal = 20.dp, vertical = 8.dp)
             ) {
                 Text(
-                    text = "Per-App Notification Filter",
+                    text = "Filtro de Notificações por App",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )
@@ -949,7 +948,7 @@ fun MainScreen(
                 OutlinedTextField(
                     value = appFilterQuery,
                     onValueChange = { appFilterQuery = it },
-                    placeholder = { Text("Search installed apps...") },
+                    placeholder = { Text("Buscar aplicativos instalados...") },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
                     singleLine = true
@@ -1005,7 +1004,7 @@ fun MainScreen(
         }
     }
 
-    // Update Available Pop-up Shelf / Dialog
+    // Painel/Diálogo de Atualização
     if (showUpdateSheet) {
         val currentUpdate = (updateState as? MainScreenViewModel.UpdateState.Available)?.release
             ?: (updateState as? MainScreenViewModel.UpdateState.Downloading)?.release
@@ -1034,7 +1033,7 @@ fun MainScreen(
                                 horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
                                 Text(
-                                    text = "Version ${currentUpdate.version}",
+                                    text = "Versão ${currentUpdate.version}",
                                     style = MaterialTheme.typography.headlineSmall,
                                     fontWeight = FontWeight.Bold
                                 )
@@ -1054,7 +1053,7 @@ fun MainScreen(
                                 }
                             }
                             Text(
-                                text = currentUpdate.name.takeIf { it != currentUpdate.version && it != currentUpdate.tagName } ?: "New GitHub Release",
+                                text = currentUpdate.name.takeIf { it != currentUpdate.version && it != currentUpdate.tagName } ?: "Novo Lançamento no GitHub",
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -1074,7 +1073,7 @@ fun MainScreen(
                                 verticalArrangement = Arrangement.spacedBy(6.dp)
                             ) {
                                 Text(
-                                    text = "What's New",
+                                    text = "Novidades",
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 13.sp,
                                     color = MaterialTheme.colorScheme.primary
@@ -1097,7 +1096,7 @@ fun MainScreen(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Text("Downloading APK...", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Text("Baixando APK...", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 Text("${(downloadingProgress * 100).roundToInt()}%", fontSize = 12.sp, fontWeight = FontWeight.Bold)
                             }
                             LinearProgressIndicator(
@@ -1119,7 +1118,7 @@ fun MainScreen(
                             modifier = Modifier.weight(1f),
                             shape = RoundedCornerShape(14.dp)
                         ) {
-                            Text("Later")
+                            Text("Depois")
                         }
 
                         Button(
@@ -1137,11 +1136,11 @@ fun MainScreen(
                                     color = MaterialTheme.colorScheme.onPrimary
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Text("Downloading...")
+                                Text("Baixando...")
                             } else {
                                 Icon(Icons.Default.Download, contentDescription = null, modifier = Modifier.size(18.dp))
                                 Spacer(modifier = Modifier.width(6.dp))
-                                Text("Install Update")
+                                Text("Instalar")
                             }
                         }
                     }
@@ -1150,7 +1149,7 @@ fun MainScreen(
         }
     }
 
-    // Feedback Bottom Sheet Dialog
+    // Modal de Feedback
     if (showFeedbackSheet) {
         ModalBottomSheet(
             onDismissRequest = { showFeedbackSheet = false },
@@ -1163,21 +1162,21 @@ fun MainScreen(
                     .padding(start = 24.dp, end = 24.dp, top = 4.dp, bottom = 32.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                // Header
+                // Cabeçalho
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text(
-                        text = "Send Feedback",
+                        text = "Enviar Feedback",
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "Report a bug or share your feature ideas for Droidbubble.",
+                        text = "Relate um problema ou compartilhe suas ideias de recursos para o Droidbubble.",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
 
-                // Category Selection: Bug Report vs Feature Suggestion
+                // Categoria: Bug vs Ideia
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -1185,7 +1184,7 @@ fun MainScreen(
                     FilterChip(
                         selected = feedbackType == FeedbackType.BUG,
                         onClick = { feedbackType = FeedbackType.BUG },
-                        label = { Text("Bug Report", fontWeight = FontWeight.SemiBold) },
+                        label = { Text("Relatório de Bug", fontWeight = FontWeight.SemiBold) },
                         leadingIcon = {
                             Icon(
                                 Icons.Default.BugReport,
@@ -1198,7 +1197,7 @@ fun MainScreen(
                     FilterChip(
                         selected = feedbackType == FeedbackType.FEATURE,
                         onClick = { feedbackType = FeedbackType.FEATURE },
-                        label = { Text("Feature Idea", fontWeight = FontWeight.SemiBold) },
+                        label = { Text("Sugestão de Recurso", fontWeight = FontWeight.SemiBold) },
                         leadingIcon = {
                             Icon(
                                 Icons.Default.Lightbulb,
@@ -1210,15 +1209,15 @@ fun MainScreen(
                     )
                 }
 
-                // Subject / Title input
+                // Entrada do Assunto
                 OutlinedTextField(
                     value = feedbackTitle,
                     onValueChange = { feedbackTitle = it },
-                    label = { Text("Subject") },
+                    label = { Text("Assunto") },
                     placeholder = {
                         Text(
-                            if (feedbackType == FeedbackType.BUG) "e.g. Media progress slider glitch"
-                            else "e.g. Add lock screen island support"
+                            if (feedbackType == FeedbackType.BUG) "Ex.: Erro na barra de progresso de mídia"
+                            else "Ex.: Suporte para a tela de bloqueio"
                         )
                     },
                     singleLine = true,
@@ -1226,15 +1225,15 @@ fun MainScreen(
                     modifier = Modifier.fillMaxWidth()
                 )
 
-                // Detailed Description input
+                // Entrada da Descrição
                 OutlinedTextField(
                     value = feedbackDescription,
                     onValueChange = { feedbackDescription = it },
-                    label = { Text("Description *") },
+                    label = { Text("Descrição *") },
                     placeholder = {
                         Text(
-                            if (feedbackType == FeedbackType.BUG) "Describe what happened and how to reproduce it..."
-                            else "Describe your idea and how it should work..."
+                            if (feedbackType == FeedbackType.BUG) "Descreva o que aconteceu e como reproduzir o erro..."
+                            else "Descreva sua ideia e como ela deve funcionar..."
                         )
                     },
                     minLines = 4,
@@ -1243,7 +1242,7 @@ fun MainScreen(
                     modifier = Modifier.fillMaxWidth()
                 )
 
-                // Attachment Section (optional)
+                // Anexo (Opcional)
                 if (attachmentUri == null) {
                     OutlinedButton(
                         onClick = { filePickerLauncher.launch("*/*") },
@@ -1252,7 +1251,7 @@ fun MainScreen(
                     ) {
                         Icon(Icons.Default.AttachFile, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Add Attachment (Screenshot / Log)", fontSize = 13.sp)
+                        Text("Adicionar Anexo (Captura / Log)", fontSize = 13.sp)
                     }
                 } else {
                     Surface(
@@ -1272,7 +1271,7 @@ fun MainScreen(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = attachmentName ?: "Attached file",
+                                text = attachmentName ?: "Arquivo anexado",
                                 style = MaterialTheme.typography.bodyMedium,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
@@ -1287,7 +1286,7 @@ fun MainScreen(
                             ) {
                                 Icon(
                                     Icons.Default.Close,
-                                    contentDescription = "Remove attachment",
+                                    contentDescription = "Remover anexo",
                                     modifier = Modifier.size(16.dp)
                                 )
                             }
@@ -1295,7 +1294,7 @@ fun MainScreen(
                     }
                 }
 
-                // Buttons: Cancel & Send Email
+                // Botões: Cancelar & Enviar E-mail
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -1305,27 +1304,27 @@ fun MainScreen(
                         modifier = Modifier.weight(1f),
                         shape = RoundedCornerShape(14.dp)
                     ) {
-                        Text("Cancel")
+                        Text("Cancelar")
                     }
 
                     Button(
                         onClick = {
-                            val subject = "[Droidbubble ${if (feedbackType == FeedbackType.BUG) "Bug" else "Feature"}] ${feedbackTitle.ifBlank { if (feedbackType == FeedbackType.BUG) "Bug Report" else "Feature Suggestion" }}"
+                            val subject = "[Droidbubble ${if (feedbackType == FeedbackType.BUG) "Bug" else "Recurso"}] ${feedbackTitle.ifBlank { if (feedbackType == FeedbackType.BUG) "Relatório de Bug" else "Sugestão de Recurso" }}"
                             val body = buildString {
-                                appendLine("Type: ${if (feedbackType == FeedbackType.BUG) "Bug Report" else "Feature Suggestion"}")
+                                appendLine("Tipo: ${if (feedbackType == FeedbackType.BUG) "Relatório de Bug" else "Sugestão de Recurso"}")
                                 if (feedbackTitle.isNotBlank()) {
-                                    appendLine("Subject: $feedbackTitle")
+                                    appendLine("Assunto: $feedbackTitle")
                                 }
                                 appendLine()
-                                appendLine("Description:")
+                                appendLine("Descrição:")
                                 appendLine(feedbackDescription.trim())
                                 appendLine()
                                 appendLine("----------------------------------------")
-                                appendLine("Device & App Info:")
-                                appendLine("Droidbubble Version: ${com.droidbubble.app.util.UpdateManager.getCurrentVersion(context)} (${context.packageName})")
-                                appendLine("Device: ${Build.MANUFACTURER} ${Build.MODEL} (${Build.DEVICE})")
-                                appendLine("Android Version: ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})")
-                                appendLine("Island Enabled: ${settings.isEnabled}")
+                                appendLine("Info do Dispositivo & App:")
+                                appendLine("Versão do Droidbubble: ${com.droidbubble.app.util.UpdateManager.getCurrentVersion(context)} (${context.packageName})")
+                                appendLine("Dispositivo: ${Build.MANUFACTURER} ${Build.MODEL} (${Build.DEVICE})")
+                                appendLine("Versão do Android: ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})")
+                                appendLine("Ilha Ativada: ${settings.isEnabled}")
                                 appendLine("----------------------------------------")
                             }
 
@@ -1347,10 +1346,9 @@ fun MainScreen(
                                 }
                             }
 
-                            // Copy details to clipboard as backup in case user wants to paste elsewhere
                             try {
                                 val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-                                clipboard?.setPrimaryClip(ClipData.newPlainText("Droidbubble Feedback", body))
+                                clipboard?.setPrimaryClip(ClipData.newPlainText("Feedback do Droidbubble", body))
                             } catch (_: Exception) {}
 
                             val gmailIntent = Intent(emailIntent).setPackage("com.google.android.gm").apply {
@@ -1363,16 +1361,16 @@ fun MainScreen(
                             try {
                                 if (context.packageManager.resolveActivity(gmailIntent, 0) != null) {
                                     context.startActivity(gmailIntent)
-                                    Toast.makeText(context, "Opening Gmail to send to velocityniele@gmail.com", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Abrindo o Gmail para enviar a velocityniele@gmail.com", Toast.LENGTH_SHORT).show()
                                 } else {
-                                    val chooser = Intent.createChooser(emailIntent, "Send Feedback via Email").apply {
+                                    val chooser = Intent.createChooser(emailIntent, "Enviar Feedback via E-mail").apply {
                                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                         if (hasAttachment) {
                                             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                                         }
                                     }
                                     context.startActivity(chooser)
-                                    Toast.makeText(context, "Choose email client to send to velocityniele@gmail.com", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Escolha um aplicativo de e-mail para enviar", Toast.LENGTH_SHORT).show()
                                 }
                             } catch (_: Exception) {
                                 val fallback = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:velocityniele@gmail.com?subject=" + Uri.encode(subject) + "&body=" + Uri.encode(body))).apply {
@@ -1380,7 +1378,7 @@ fun MainScreen(
                                 }
                                 runCatching {
                                     context.startActivity(fallback)
-                                    Toast.makeText(context, "Opening mail client...", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Abrindo aplicativo de e-mail...", Toast.LENGTH_SHORT).show()
                                 }
                             }
 
@@ -1396,7 +1394,7 @@ fun MainScreen(
                     ) {
                         Icon(Icons.Default.Send, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text("Send Email")
+                        Text("Enviar E-mail")
                     }
                 }
             }
@@ -1570,7 +1568,7 @@ enum class FeedbackType {
 }
 
 private fun getAttachmentFileName(context: Context, uri: Uri): String {
-    var name = "attachment"
+    var name = "anexo"
     try {
         context.contentResolver.query(uri, null, null, null, null)?.use { cursor ->
             val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
@@ -1597,12 +1595,12 @@ fun DimensionsPage(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text("Island Dimensions", fontWeight = FontWeight.Bold) },
+                title = { Text("Dimensões da Ilha", fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = "Voltar"
                         )
                     }
                 },
@@ -1646,7 +1644,7 @@ fun DimensionsPage(
                 ) {
                     SettingsCardItem(position = GroupPosition.TOP) {
                         SliderSettingItem(
-                            label = "Width",
+                            label = "Largura",
                             value = settings.widthDp.toFloat(),
                             unit = "dp",
                             valueRange = 50f..260f,
@@ -1656,7 +1654,7 @@ fun DimensionsPage(
 
                     SettingsCardItem(position = GroupPosition.MIDDLE) {
                         SliderSettingItem(
-                            label = "Height",
+                            label = "Altura",
                             value = settings.heightDp.toFloat(),
                             unit = "dp",
                             valueRange = 12f..56f,
@@ -1666,7 +1664,7 @@ fun DimensionsPage(
 
                     SettingsCardItem(position = GroupPosition.MIDDLE) {
                         SliderSettingItem(
-                            label = "Corner Radius",
+                            label = "Raio das Bordas",
                             value = settings.cornerRadiusDp.toFloat(),
                             unit = "dp",
                             valueRange = 10f..28f,
@@ -1676,7 +1674,7 @@ fun DimensionsPage(
 
                     SettingsCardItem(position = GroupPosition.MIDDLE) {
                         SliderSettingItem(
-                            label = "Top Offset (Notch Line-up)",
+                            label = "Deslocamento Superior (Alinhamento do Notch)",
                             value = settings.topOffsetDp.toFloat(),
                             unit = "dp",
                             valueRange = 0f..60f,
@@ -1686,7 +1684,7 @@ fun DimensionsPage(
 
                     SettingsCardItem(position = GroupPosition.MIDDLE) {
                         SliderSettingItem(
-                            label = "Horizontal Offset",
+                            label = "Deslocamento Horizontal",
                             value = settings.horizontalOffsetDp.toFloat(),
                             unit = "dp",
                             valueRange = -50f..50f,
@@ -1696,7 +1694,7 @@ fun DimensionsPage(
 
                     SettingsCardItem(position = GroupPosition.MIDDLE) {
                         SliderSettingItem(
-                            label = "Expanded Card Scale",
+                            label = "Escala da Ilha Expandida",
                             value = settings.expandedScale,
                             unit = "x",
                             valueRange = 0.8f..1.3f,
@@ -1707,7 +1705,7 @@ fun DimensionsPage(
 
                     SettingsCardItem(position = GroupPosition.BOTTOM) {
                         SliderSettingItem(
-                            label = "Animation Speed",
+                            label = "Velocidade das Animações",
                             value = settings.animationSpeed,
                             unit = "x",
                             valueRange = 0.5f..2.0f,
@@ -1740,7 +1738,7 @@ fun CutoutPositionSelectorCard(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
-                text = "Camera Cut-out Position",
+                text = "Posição do Recorte da Câmera",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onSurface
@@ -1751,21 +1749,21 @@ fun CutoutPositionSelectorCard(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 CutoutPositionOptionButton(
-                    label = "Center",
+                    label = "Centro",
                     mode = CutoutModeOption.CENTER,
                     isSelected = selectedMode == CutoutModeOption.CENTER,
                     onClick = { onSelectMode(CutoutModeOption.CENTER) },
                     modifier = Modifier.weight(1f)
                 )
                 CutoutPositionOptionButton(
-                    label = "Left",
+                    label = "Esquerda",
                     mode = CutoutModeOption.LEFT,
                     isSelected = selectedMode == CutoutModeOption.LEFT,
                     onClick = { onSelectMode(CutoutModeOption.LEFT) },
                     modifier = Modifier.weight(1f)
                 )
                 CutoutPositionOptionButton(
-                    label = "Tear-drop",
+                    label = "Gota (Tear-drop)",
                     mode = CutoutModeOption.TEARDROP,
                     isSelected = selectedMode == CutoutModeOption.TEARDROP,
                     onClick = { onSelectMode(CutoutModeOption.TEARDROP) },
@@ -1838,7 +1836,6 @@ private fun CutoutPositionOptionButton(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            // Cropped top phone bezel illustration with just the selfie camera circle (or tear-drop notch)
             androidx.compose.foundation.Canvas(
                 modifier = Modifier
                     .width(74.dp)
@@ -1903,7 +1900,6 @@ private fun CutoutPositionOptionButton(
                         )
                     }
                     CutoutModeOption.TEARDROP -> {
-                        // Outward-rounded top corners blending from the top bezel into a centered tear-drop semicircle
                         val dropR = 7.dp.toPx()
                         val earR = 5.dp.toPx()
                         val dropBottomY = topY + dropR * 1.45f
@@ -1957,7 +1953,7 @@ fun AppearancePage(
     if (showFontDialog) {
         AlertDialog(
             onDismissRequest = { showFontDialog = false },
-            title = { Text("Select Font", fontWeight = FontWeight.Bold) },
+            title = { Text("Selecionar Fonte", fontWeight = FontWeight.Bold) },
             text = {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
@@ -1997,7 +1993,7 @@ fun AppearancePage(
             },
             confirmButton = {
                 TextButton(onClick = { showFontDialog = false }) {
-                    Text("Done")
+                    Text("Concluído")
                 }
             }
         )
@@ -2007,12 +2003,12 @@ fun AppearancePage(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text("Appearance & Feedback", fontWeight = FontWeight.Bold) },
+                title = { Text("Aparência e Feedback", fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = "Voltar"
                         )
                     }
                 },
@@ -2038,7 +2034,7 @@ fun AppearancePage(
                     SettingsCardItem(position = if (outlineActive) GroupPosition.TOP else GroupPosition.SINGLE, isActive = settings.showOutline) {
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            headlineContent = { Text("Island Outline", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Contorno da Ilha", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.CropSquare, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             },
@@ -2056,7 +2052,7 @@ fun AppearancePage(
                     if (outlineActive) {
                         SettingsCardItem(position = GroupPosition.BOTTOM) {
                             SliderSettingItem(
-                                label = "Outline Thickness",
+                                label = "Espessura do Contorno",
                                 value = settings.outlineThicknessDp,
                                 unit = "dp",
                                 valueRange = 0.5f..4.0f,
@@ -2084,7 +2080,7 @@ fun AppearancePage(
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                                 ) {
-                                    Text("Glass", fontWeight = FontWeight.SemiBold)
+                                    Text("Efeito de Vidro (Glass)", fontWeight = FontWeight.SemiBold)
                                     Surface(
                                         shape = RoundedCornerShape(6.dp),
                                         color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
@@ -2116,7 +2112,7 @@ fun AppearancePage(
                     if (glassActive) {
                         SettingsCardItem(position = GroupPosition.BOTTOM) {
                             SliderSettingItem(
-                                label = "Opacity",
+                                label = "Opacidade",
                                 value = settings.glassOpacity.toFloat(),
                                 unit = "%",
                                 valueRange = 0f..100f,
@@ -2135,7 +2131,7 @@ fun AppearancePage(
                     SettingsCardItem(position = GroupPosition.TOP, isActive = settings.bubbleEffectEnabled) {
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            headlineContent = { Text("Bubble Effect", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Efeito de Bolha", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.RoundedCorner, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             },
@@ -2153,8 +2149,8 @@ fun AppearancePage(
                     SettingsCardItem(position = GroupPosition.MIDDLE, isActive = settings.showDualActivityInCompact) {
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            headlineContent = { Text("Dual Activity on Minimised Island", fontWeight = FontWeight.SemiBold) },
-                            supportingContent = { Text("Shows secondary bubble; when off, shows only priority activity until expanded", style = MaterialTheme.typography.bodySmall) },
+                            headlineContent = { Text("Atividade Dupla na Ilha Minimizada", fontWeight = FontWeight.SemiBold) },
+                            supportingContent = { Text("Exibe uma bolha secundária; quando desativado, exibe apenas a atividade prioritária até expandir", style = MaterialTheme.typography.bodySmall) },
                             leadingContent = {
                                 Icon(Icons.Default.Widgets, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             },
@@ -2172,7 +2168,7 @@ fun AppearancePage(
                     SettingsCardItem(position = GroupPosition.MIDDLE, isActive = settings.alwaysShowPill) {
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            headlineContent = { Text("Always Show Pill", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Sempre Exibir a Pílula", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.FitScreen, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             },
@@ -2190,7 +2186,7 @@ fun AppearancePage(
                     SettingsCardItem(position = GroupPosition.MIDDLE, isActive = settings.hapticsEnabled) {
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            headlineContent = { Text("Haptic Feedback", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Resposta Tátil (Vibração)", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.Vibration, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             },
@@ -2208,7 +2204,7 @@ fun AppearancePage(
                     SettingsCardItem(position = GroupPosition.BOTTOM, isActive = settings.showInLandscape) {
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            headlineContent = { Text("Show in Landscape", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Exibir no Modo Paisagem", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.ScreenRotation, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             },
@@ -2227,7 +2223,7 @@ fun AppearancePage(
 
             item {
                 SectionHeader(
-                    title = "Media Player Customisation",
+                    title = "Personalização do Reprodutor de Mídia",
                     icon = Icons.Default.MusicNote
                 )
             }
@@ -2240,7 +2236,7 @@ fun AppearancePage(
                     SettingsCardItem(position = GroupPosition.TOP, isActive = settings.mediaWaveAnimation) {
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            headlineContent = { Text("Ambient Album Wave", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Onda Ambiente do Álbum", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.GraphicEq, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             },
@@ -2258,7 +2254,7 @@ fun AppearancePage(
                     SettingsCardItem(position = GroupPosition.MIDDLE, isActive = settings.wavyProgressBar) {
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            headlineContent = { Text("Wavy Progress Scrubber", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Barra de Progresso Ondulada", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.LinearScale, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             },
@@ -2276,7 +2272,7 @@ fun AppearancePage(
                     SettingsCardItem(position = GroupPosition.MIDDLE, isActive = settings.spinningAlbumArt) {
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            headlineContent = { Text("Spinning Vinyl Cover", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Capa de Vinil Giratória", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.Album, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             },
@@ -2294,7 +2290,7 @@ fun AppearancePage(
                     SettingsCardItem(position = GroupPosition.BOTTOM, isActive = settings.blurredAlbumArtBackground) {
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            headlineContent = { Text("Blurred Album Art Background", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Fundo com Capa Desfocada", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.MusicNote, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             },
@@ -2313,7 +2309,7 @@ fun AppearancePage(
 
             item {
                 SectionHeader(
-                    title = "Island Font",
+                    title = "Fonte da Ilha",
                     icon = Icons.Default.FontDownload
                 )
             }
@@ -2323,14 +2319,14 @@ fun AppearancePage(
                     ListItem(
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                         modifier = Modifier.clickable { showFontDialog = true },
-                        headlineContent = { Text("Change Font", fontWeight = FontWeight.SemiBold) },
+                        headlineContent = { Text("Alterar Fonte", fontWeight = FontWeight.SemiBold) },
                         leadingContent = {
                             Icon(Icons.Default.FontDownload, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         },
                         trailingContent = {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                                contentDescription = "Change Font",
+                                contentDescription = "Alterar Fonte",
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                                 modifier = Modifier.size(16.dp)
                             )
@@ -2362,17 +2358,17 @@ fun GeneralPage(
     if (showWeatherDialog) {
         AlertDialog(
             onDismissRequest = { showWeatherDialog = false },
-            title = { Text("Weather Location") },
+            title = { Text("Localização do Clima") },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
-                        "Enter a city or location name to show weather for (e.g. London, Paris, New York, Thessaloniki). Leave blank for automatic time-zone approximation.",
+                        "Digite o nome de uma cidade ou local para exibir o clima (ex.: São Paulo, Rio de Janeiro, Salvador, Lisboa). Deixe em branco para aproximação automática pelo fuso horário.",
                         style = MaterialTheme.typography.bodyMedium
                     )
                     OutlinedTextField(
                         value = weatherCityInput,
                         onValueChange = { weatherCityInput = it },
-                        label = { Text("City or Town") },
+                        label = { Text("Cidade ou Município") },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -2385,12 +2381,12 @@ fun GeneralPage(
                         showWeatherDialog = false
                     }
                 ) {
-                    Text("Save")
+                    Text("Salvar")
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showWeatherDialog = false }) {
-                    Text("Cancel")
+                    Text("Cancelar")
                 }
             }
         )
@@ -2400,12 +2396,12 @@ fun GeneralPage(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text("General", fontWeight = FontWeight.Bold) },
+                title = { Text("Geral", fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = "Voltar"
                         )
                     }
                 },
@@ -2430,7 +2426,7 @@ fun GeneralPage(
                     SettingsCardItem(position = GroupPosition.TOP, isActive = settings.autoDismissNotifications) {
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            headlineContent = { Text("Auto-Dismiss Notifications", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Ocultar Notificações Automaticamente", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.Timer, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             },
@@ -2448,7 +2444,7 @@ fun GeneralPage(
                     if (settings.autoDismissNotifications) {
                         SettingsCardItem(position = GroupPosition.MIDDLE) {
                             SliderSettingItem(
-                                label = "Auto-Dismiss Duration",
+                                label = "Tempo para Ocultar",
                                 value = settings.notificationAutoDismissSeconds.toFloat(),
                                 unit = "s",
                                 valueRange = 1f..10f,
@@ -2462,9 +2458,9 @@ fun GeneralPage(
 
                     SettingsCardItem(position = GroupPosition.MIDDLE) {
                         SliderSettingItem(
-                            label = "Notification Max Lines",
+                            label = "Máximo de Linhas da Notificação",
                             value = settings.notificationMaxLines.toFloat(),
-                            unit = "lines",
+                            unit = "linhas",
                             valueRange = 1f..6f,
                             steps = 4,
                             onValueChange = { lines ->
@@ -2482,7 +2478,7 @@ fun GeneralPage(
                             },
                             headlineContent = {
                                 Text(
-                                    if (settings.weatherCity.isBlank()) "Weather Location" else "Weather Location (${settings.weatherCity})",
+                                    if (settings.weatherCity.isBlank()) "Localização do Clima" else "Localização do Clima (${settings.weatherCity})",
                                     fontWeight = FontWeight.SemiBold
                                 )
                             },
@@ -2492,7 +2488,7 @@ fun GeneralPage(
                             trailingContent = {
                                 Icon(
                                     Icons.AutoMirrored.Filled.ArrowForwardIos,
-                                    contentDescription = "Set Location",
+                                    contentDescription = "Definir Localização",
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                                     modifier = Modifier.size(16.dp)
                                 )
@@ -2503,7 +2499,7 @@ fun GeneralPage(
                     SettingsCardItem(position = GroupPosition.MIDDLE, isActive = settings.swapActivitiesOnSwipe) {
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            headlineContent = { Text("Swipe to Swap Activities", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Deslizar para Alternar Atividades", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.TouchApp, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             },
@@ -2521,7 +2517,7 @@ fun GeneralPage(
                     SettingsCardItem(position = GroupPosition.MIDDLE, isActive = settings.dismissMediaOnPause) {
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            headlineContent = { Text("Dismiss on Pause", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Fechar Mídia ao Pausar", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.MusicNote, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             },
@@ -2539,7 +2535,7 @@ fun GeneralPage(
                     SettingsCardItem(position = GroupPosition.BOTTOM, isActive = settings.hideOnLockScreen) {
                         ListItem(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            headlineContent = { Text("Hide on Lock Screen", fontWeight = FontWeight.SemiBold) },
+                            headlineContent = { Text("Ocultar na Tela de Bloqueio", fontWeight = FontWeight.SemiBold) },
                             leadingContent = {
                                 Icon(Icons.Default.Lock, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             },
@@ -2576,7 +2572,7 @@ fun AnimationCurveEditor(
     settings: IslandSettings,
     onUpdateSettings: ((IslandSettings) -> IslandSettings) -> Unit
 ) {
-    val targets = listOf("Expand", "Appear", "Split")
+    val targets = listOf("Expandir", "Aparecer", "Dividir")
     var selected by remember { mutableStateOf(0) }
     val defaults = listOf(0.74f to 380f, 0.60f to 280f, 0.63f to 320f)
     val damping = when (selected) { 0 -> settings.expandDamping; 1 -> settings.appearDamping; else -> settings.splitDamping }
@@ -2601,16 +2597,15 @@ fun AnimationCurveEditor(
             ) {
                 Icon(Icons.Default.Animation, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.width(16.dp))
-                Text("Animation Curves", fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
+                Text("Curvas de Animação", fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
                 TextButton(onClick = { setCurve(defaults[selected].first, defaults[selected].second) }, enabled = !isDefault) {
                     Icon(Icons.Default.Refresh, contentDescription = null, modifier = Modifier.size(16.dp))
                     Spacer(Modifier.width(4.dp))
-                    Text("Reset")
+                    Text("Restaurar")
                 }
             }
             Spacer(Modifier.height(10.dp))
 
-            // Expand / Appear / Split segmented buttons matching screen record & live progress cards
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -2703,14 +2698,14 @@ fun AnimationCurveEditor(
 
             val bounce = ((1f - damping) / 0.7f).coerceIn(0f, 1f)
             SliderSettingItemPct(
-                label = "Bounce",
+                label = "Elasticidade (Bounce)",
                 valueText = "${(bounce * 100).toInt()}%",
                 value = bounce,
                 valueRange = 0f..1f,
                 onValueChange = { b -> setCurve((1f - 0.7f * b), stiffness) }
             )
             SliderSettingItemPct(
-                label = "Snap",
+                label = "Rigidez (Snap)",
                 valueText = "${stiffness.toInt()}",
                 value = stiffness,
                 valueRange = 150f..700f,
